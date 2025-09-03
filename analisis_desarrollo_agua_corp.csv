@@ -1,0 +1,75 @@
+Característica de la Pantalla,Complejidad Estimada,Tiempo de Desarrollo (horas),Notas del desarrollador
+AUTENTICACIÓN Y NAVEGACIÓN,,,,,
+LoginScreen.tsx,Baja,4,Pantalla de login con logo corporativo validación básica y navegación por roles
+SecondAuthScreen.tsx,Baja,3,Pantalla secundaria de autenticación con validación de credenciales
+RootNavigator.tsx,Media,6,Sistema de navegación principal con stacks por roles y protección de rutas
+RoleTabs.tsx,Media,5,Componente de tabs por roles con navegación condicional
+PANEL DE ADMINISTRADOR,,,,,
+AdminHome.tsx,Media,8,Dashboard principal con estadísticas búsqueda de clientes y navegación
+AdminStack.tsx,Baja,3,Stack de navegación para administradores
+AdminTabs.tsx,Media,6,Componente de tabs para administradores con iconos y navegación
+AdminClients.tsx,Alta,12,Gestión completa de clientes: búsqueda filtros CRUD paginación
+AdminReaders.tsx,Alta,10,Gestión de lectores: asignación auditoría historial de actividades
+AdminReports.tsx,Alta,15,Reportes complejos con gráficos filtros por período exportación de datos
+AdminUserHistory.tsx,Media,8,Historial detallado de lecturas de cliente específico con filtros por año
+AdminEditReading.tsx,Media,6,Edición de lecturas con validación y confirmación de cambios
+AdminReaderHistory.tsx,Media,7,Historial de auditoría de lector específico con logs detallados
+PANEL DE LECTOR,,,,,
+ReaderHome.tsx,Alta,12,Pantalla principal con búsqueda de medidores QR scanner información del lector
+ReaderStack.tsx,Baja,3,Stack de navegación para lectores
+ReaderHistory.tsx,Media,8,Historial de lecturas del lector con filtros y búsqueda
+ReaderEditReading.tsx,Media,6,Edición de lecturas existentes con validación
+ReaderAddReading.tsx,Alta,14,Nueva pantalla para agregar lecturas con: notas foto estado del medidor código de verificación
+PANEL DE CLIENTE,,,,,
+ClientHome.tsx,Media,8,Dashboard del cliente con última lectura y navegación a historial
+ClientStack.tsx,Baja,3,Stack de navegación para clientes
+ClientWelcome.tsx,Baja,4,Pantalla de bienvenida con información personalizada
+ClientHistory.tsx,Alta,12,Historial de lecturas con gráfico interactivo filtros por período scroll horizontal
+ClientReadingDetails.tsx,Alta,10,Detalles de lectura con información de pago instrucciones bancarias logo corporativo
+ClientPersonalData.tsx,Media,7,Gestión de datos personales: edición de dirección teléfono email
+COMPONENTES UI REUTILIZABLES,,,,,
+AppButton.tsx,Baja,2,Botón reutilizable con variantes y estilos
+AppCard.tsx,Baja,2,Tarjeta contenedor con sombras y bordes redondeados
+AppInput.tsx,Baja,3,Input con validación y estilos consistentes
+AppSelect.tsx,Baja,3,Selector dropdown con opciones personalizables
+AppTable.tsx,Media,5,Tabla con paginación ordenamiento y filtros
+Feedback.tsx,Baja,2,Componente de retroalimentación para el usuario
+Loader.tsx,Baja,1,Indicador de carga con animación
+LogoutButton.tsx,Baja,2,Botón de logout consistente en toda la aplicación
+SERVICIOS Y UTILIDADES,,,,,
+mockApi.ts,Media,6,API simulada con funciones de CRUD para lecturas y clientes
+mockAdmin.ts,Media,5,Servicios administrativos: gestión de lectores y auditoría
+authContext.tsx,Media,7,Contexto de autenticación con gestión de estado y persistencia
+Styles.ts,Baja,3,Constantes de estilos: colores tamaños espaciado sombras
+CONFIGURACIÓN Y NAVEGACIÓN,,,,,
+App.tsx,Baja,2,Componente principal con configuración de navegación
+index.js,Baja,1,Punto de entrada de la aplicación
+package.json,Baja,1,Configuración de dependencias y scripts
+tsconfig.json,Baja,1,Configuración de TypeScript
+app.json,Baja,1,Configuración de Expo
+.gitignore,Baja,1,Archivo de exclusión de Git
+FUNCIONALIDADES ESPECÍFICAS IMPLEMENTADAS,,,,,
+Sistema de Roles,Alta,10,Autenticación por roles (Admin Lector Cliente) con navegación condicional
+Gestión de Lecturas,Alta,15,Sistema completo de CRUD para lecturas con validaciones y cálculos
+Cálculo de Consumo,Media,6,Lógica de cálculo de consumo con manejo de reinicio de medidores
+Sistema de Pagos,Media,8,Integración de información de pago con instrucciones bancarias
+Reportes y Estadísticas,Alta,12,Generación de reportes con gráficos y métricas de rendimiento
+Auditoría de Lectores,Media,8,Sistema de logs y seguimiento de actividades de lectores
+Búsqueda y Filtros,Media,7,Funcionalidad de búsqueda avanzada con filtros por múltiples criterios
+Integración de Cámara,Media,6,Funcionalidad de captura de fotos para evidencia de lecturas
+Scanner QR,Media,5,Integración de scanner QR para acceso rápido a medidores
+Validaciones de Formularios,Media,8,Sistema robusto de validación con mensajes de error personalizados
+RESUMEN DE COMPLEJIDAD Y TIEMPO,,,,,
+Total de Pantallas,25,-,Incluye todas las pantallas principales y componentes
+Total de Componentes UI,8,-,Componentes reutilizables para mantener consistencia
+Total de Servicios,3,-,Servicios de API y contexto de autenticación
+Complejidad Baja,15,45,Funcionalidades básicas y componentes simples
+Complejidad Media,12,84,Funcionalidades intermedias con lógica de negocio
+Complejidad Alta,8,108,Funcionalidades complejas con múltiples integraciones
+TOTAL GENERAL,35,237,Suma total de horas de desarrollo estimadas
+TIEMPO POR MESES (ASUMIENDO 8 HORAS/DÍA 22 DÍAS/MES),,,,
+Horas por día,8,-,Jornada laboral estándar
+Días por mes,22,-,Días laborales promedio
+Horas por mes,176,-,Capacidad mensual de desarrollo
+Meses totales,1.35,-,Tiempo total estimado en meses
+Meses redondeados,2,-,Tiempo real considerando imprevistos y testing

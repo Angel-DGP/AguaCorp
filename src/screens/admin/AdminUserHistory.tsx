@@ -3,11 +3,12 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { AppCard } from '@components/ui/AppCard';
 import { FontAwesome } from '@expo/vector-icons';
 import { COLORS } from '../../constants/Colors';
+import { SPACING, FONT_SIZES, FONT_WEIGHTS, BORDER_RADIUS, SHADOWS, ICON_SIZES } from '../../constants/Styles';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AdminStackParamList } from './AdminStack';
-import { getHistory, formatMonth } from '@services/mockApi';
+import { getHistory, formatMonth } from '../../services/mockApi';
 
 export default function AdminUserHistory() {
   const route = useRoute<RouteProp<AdminStackParamList, 'AdminUserHistory'>>();
@@ -61,23 +62,34 @@ export default function AdminUserHistory() {
 
   return (
     <ScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 32 }}
+      style={{ flex: 1, backgroundColor: '#f8fafc' }}
+      contentContainerStyle={{ padding: SPACING.base, paddingBottom: SPACING.xl }}
       contentInsetAdjustmentBehavior="automatic"
       automaticallyAdjustsScrollIndicatorInsets
     >
+      {/* Header con información del cliente */}
       <AppCard>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <FontAwesome name="user" size={20} color={COLORS.darkBlue} />
-          <Text style={{ fontSize: 18, fontWeight: '700', color: COLORS.darkBlue }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, marginBottom: SPACING.base }}>
+          <FontAwesome name="user" size={ICON_SIZES.lg} color={COLORS.darkBlue} />
+          <Text style={{ fontSize: FONT_SIZES.xl, fontWeight: FONT_WEIGHTS.bold, color: COLORS.darkBlue }}>
             {customerName}
           </Text>
         </View>
-        <Text style={{ color: COLORS.darkGray }}>Cédula: {customerCedula}</Text>
-        <Text style={{ color: COLORS.darkGray }}>Medidor: {meterNumber}</Text>
-        <Text style={{ color: COLORS.darkGray, marginTop: 4 }}>Total de lecturas: {history.length}</Text>
-        <Text style={{ color: COLORS.darkGray }}>Año seleccionado: {selectedYear}</Text>
-        <Text style={{ color: COLORS.darkGray }}>Lecturas filtradas: {filtered.length}</Text>
+        
+        <View style={{ gap: SPACING.xs, marginBottom: SPACING.base }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.sm }}>
+            <FontAwesome name="id-card" size={ICON_SIZES.sm} color={COLORS.darkGray} />
+            <Text style={{ color: COLORS.darkGray }}>Cédula: {customerCedula}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.sm }}>
+            <FontAwesome name="tachometer" size={ICON_SIZES.sm} color={COLORS.darkGray} />
+            <Text style={{ color: COLORS.darkGray }}>Medidor: {meterNumber}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.sm }}>
+            <FontAwesome name="history" size={ICON_SIZES.sm} color={COLORS.darkGray} />
+            <Text style={{ color: COLORS.darkGray }}>Total de lecturas: {history.length}</Text>
+          </View>
+        </View>
         
         {/* Botón de refresh */}
         <Pressable
@@ -86,115 +98,151 @@ export default function AdminUserHistory() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 6,
+            gap: SPACING.xs,
             backgroundColor: COLORS.lightBlue,
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 6,
-            marginTop: 12
+            paddingVertical: SPACING.sm,
+            paddingHorizontal: SPACING.base,
+            borderRadius: BORDER_RADIUS.sm,
+            ...SHADOWS.sm
           }}
         >
-          <FontAwesome name="refresh" size={14} color={COLORS.white} />
-          <Text style={{ color: COLORS.white, fontWeight: '600', fontSize: 12 }}>
+          <FontAwesome name="refresh" size={ICON_SIZES.sm} color={COLORS.white} />
+          <Text style={{ color: COLORS.white, fontWeight: FONT_WEIGHTS.semibold, fontSize: FONT_SIZES.sm }}>
             Actualizar Datos
           </Text>
         </Pressable>
       </AppCard>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <FontAwesome name="calendar" size={20} color={COLORS.orange} />
-          <Text style={{ fontSize: 18, fontWeight: '700', color: COLORS.orange }}>
-            Historial {selectedYear}
+      {/* Selector de año */}
+      <AppCard>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.sm }}>
+            <FontAwesome name="calendar" size={ICON_SIZES.base} color={COLORS.orange} />
+            <Text style={{ fontSize: FONT_SIZES.lg, fontWeight: FONT_WEIGHTS.bold, color: COLORS.orange }}>
+              Historial {selectedYear}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', gap: SPACING.base }}>
+            <Pressable 
+              onPress={() => setSelectedYear((y) => Math.max(years[0] ?? y - 1, y - 1))} 
+              disabled={years.length === 0 || selectedYear <= years[0]}
+              style={{
+                paddingHorizontal: SPACING.sm,
+                paddingVertical: SPACING.xs,
+                borderRadius: BORDER_RADIUS.sm,
+                backgroundColor: years.length === 0 || selectedYear <= years[0] ? COLORS.lightGray : COLORS.lightBlue + '20'
+              }}
+            >
+              <Text style={{ 
+                color: years.length === 0 || selectedYear <= years[0] ? COLORS.gray : COLORS.darkBlue,
+                fontWeight: FONT_WEIGHTS.semibold
+              }}>
+                ‹ {years.length ? Math.max(years[0], selectedYear - 1) : ''}
+              </Text>
+            </Pressable>
+            <Pressable 
+              onPress={() => setSelectedYear((y) => Math.min(years[years.length - 1] ?? y + 1, y + 1))} 
+              disabled={years.length === 0 || selectedYear >= years[years.length - 1]}
+              style={{
+                paddingHorizontal: SPACING.sm,
+                paddingVertical: SPACING.xs,
+                borderRadius: BORDER_RADIUS.sm,
+                backgroundColor: years.length === 0 || selectedYear >= years[years.length - 1] ? COLORS.lightGray : COLORS.lightBlue + '20'
+              }}
+            >
+              <Text style={{ 
+                color: years.length === 0 || selectedYear >= years[years.length - 1] ? COLORS.gray : COLORS.darkBlue,
+                fontWeight: FONT_WEIGHTS.semibold
+              }}>
+                {years.length ? Math.min(years[years.length - 1], selectedYear + 1) : ''} ›
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+        
+        {filtered.length > 0 && (
+          <Text style={{ color: COLORS.darkGray, fontSize: FONT_SIZES.sm, marginTop: SPACING.sm }}>
+            {filtered.length} lectura{filtered.length !== 1 ? 's' : ''} encontrada{filtered.length !== 1 ? 's' : ''}
           </Text>
-        </View>
-        <View style={{ flexDirection: 'row', gap: 12 }}>
-          <Pressable 
-            onPress={() => setSelectedYear((y) => Math.max(years[0] ?? y - 1, y - 1))} 
-            disabled={years.length === 0 || selectedYear <= years[0]}
-          >
-            <Text style={{ 
-              color: years.length === 0 || selectedYear <= years[0] ? COLORS.gray : COLORS.darkBlue 
-            }}>
-              ‹ {years.length ? Math.max(years[0], selectedYear - 1) : ''}
-            </Text>
-          </Pressable>
-          <Pressable 
-            onPress={() => setSelectedYear((y) => Math.min(years[years.length - 1] ?? y + 1, y + 1))} 
-            disabled={years.length === 0 || selectedYear >= years[years.length - 1]}
-          >
-            <Text style={{ 
-              color: years.length === 0 || selectedYear >= years[years.length - 1] ? COLORS.gray : COLORS.darkBlue 
-            }}>
-              {years.length ? Math.min(years[years.length - 1], selectedYear + 1) : ''} ›
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+        )}
+      </AppCard>
 
       {sortedHistory.length === 0 ? (
         <AppCard>
-          <View style={{ alignItems: 'center', padding: 20 }}>
-            <FontAwesome name="info-circle" size={32} color={COLORS.gray} />
-            <Text style={{ color: COLORS.gray, marginTop: 8 }}>No hay lecturas para este año</Text>
-            <Text style={{ color: COLORS.darkGray, marginTop: 4, fontSize: 12 }}>
+          <View style={{ alignItems: 'center', padding: SPACING.xl }}>
+            <FontAwesome name="info-circle" size={ICON_SIZES['2xl']} color={COLORS.gray} />
+            <Text style={{ color: COLORS.gray, marginTop: SPACING.sm, fontSize: FONT_SIZES.lg, fontWeight: FONT_WEIGHTS.semibold }}>
+              No hay lecturas para este año
+            </Text>
+            <Text style={{ color: COLORS.darkGray, marginTop: SPACING.xs, fontSize: FONT_SIZES.sm, textAlign: 'center' }}>
               Años disponibles: {years.join(', ') || 'Ninguno'}
             </Text>
           </View>
         </AppCard>
       ) : (
-        <View style={{ gap: 12 }}>
+        <View style={{ gap: SPACING.base }}>
           {sortedHistory.map((r) => (
             <AppCard key={r.id}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <FontAwesome name="calendar" size={14} color={COLORS.darkBlue} />
-                  <Text style={{ fontWeight: '600', color: COLORS.darkBlue }}>
+              {/* Header de la lectura */}
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: SPACING.sm }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+                  <FontAwesome name="calendar" size={ICON_SIZES.sm} color={COLORS.darkBlue} />
+                  <Text style={{ fontWeight: FONT_WEIGHTS.semibold, color: COLORS.darkBlue, fontSize: FONT_SIZES.base }}>
                     {formatMonth(r.date)}
                   </Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <FontAwesome name={r.paid ? "check-circle" : "clock-o"} size={14} color={r.paid ? COLORS.green : COLORS.orange} />
-                  <Text style={{ color: r.paid ? COLORS.green : COLORS.orange }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+                  <FontAwesome name={r.paid ? "check-circle" : "clock-o"} size={ICON_SIZES.sm} color={r.paid ? COLORS.green : COLORS.orange} />
+                  <Text style={{ color: r.paid ? COLORS.green : COLORS.orange, fontWeight: FONT_WEIGHTS.semibold, fontSize: FONT_SIZES.sm }}>
                     {r.paid ? 'Pagado' : 'Pendiente'}
                   </Text>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <FontAwesome name="tachometer" size={14} color={COLORS.darkGray} />
-                  <Text style={{ color: COLORS.darkGray }}>Lectura</Text>
+              
+              {/* Datos de la lectura */}
+              <View style={{ gap: SPACING.xs, marginBottom: SPACING.sm }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+                    <FontAwesome name="tachometer" size={ICON_SIZES.sm} color={COLORS.darkGray} />
+                    <Text style={{ color: COLORS.darkGray, fontSize: FONT_SIZES.sm }}>Lectura</Text>
+                  </View>
+                  <Text style={{ fontWeight: FONT_WEIGHTS.semibold, color: COLORS.darkBlue, fontSize: FONT_SIZES.base }}>
+                    {r.value} m³
+                  </Text>
                 </View>
-                <Text style={{ fontWeight: '600', color: COLORS.darkBlue }}>{r.value} m³</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <FontAwesome name="tint" size={14} color={COLORS.lightBlue} />
-                  <Text style={{ color: COLORS.darkGray }}>Consumo</Text>
+                
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+                    <FontAwesome name="tint" size={ICON_SIZES.sm} color={COLORS.lightBlue} />
+                    <Text style={{ color: COLORS.darkGray, fontSize: FONT_SIZES.sm }}>Consumo</Text>
+                  </View>
+                  <Text style={{ fontWeight: FONT_WEIGHTS.semibold, color: COLORS.lightBlue, fontSize: FONT_SIZES.base }}>
+                    {r.diff} m³
+                  </Text>
                 </View>
-                <Text style={{ fontWeight: '600', color: COLORS.lightBlue }}>{r.diff} m³</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                  <FontAwesome name="money" size={14} color={COLORS.orange} />
-                  <Text style={{ color: COLORS.darkGray }}>Monto</Text>
+                
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.xs }}>
+                    <FontAwesome name="money" size={ICON_SIZES.sm} color={COLORS.orange} />
+                    <Text style={{ color: COLORS.darkGray, fontSize: FONT_SIZES.sm }}>Monto</Text>
+                  </View>
+                  <Text style={{ fontWeight: FONT_WEIGHTS.bold, color: COLORS.orange, fontSize: FONT_SIZES.base }}>
+                    ${r.amount.toFixed(2)}
+                  </Text>
                 </View>
-                <Text style={{ fontWeight: '700', color: COLORS.orange }}>
-                  ${r.amount.toFixed(2)}
-                </Text>
               </View>
               
               {/* Información adicional para admin */}
               <View style={{ 
-                backgroundColor: COLORS.lightBlue + '20', 
-                padding: 8, 
-                borderRadius: 4, 
-                marginTop: 8 
+                backgroundColor: COLORS.lightBlue + '15', 
+                padding: SPACING.sm, 
+                borderRadius: BORDER_RADIUS.sm, 
+                marginBottom: SPACING.sm
               }}>
-                <Text style={{ fontSize: 12, color: COLORS.darkGray }}>
+                <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.darkGray, marginBottom: SPACING.xs }}>
                   ID: {r.id} | Creado: {new Date(r.createdAt).toLocaleDateString('es-ES')}
                 </Text>
-                <Text style={{ fontSize: 12, color: COLORS.darkGray }}>
+                <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.darkGray }}>
                   Editable: {r.isEditable ? 'Sí' : 'No'}
                 </Text>
               </View>
@@ -207,16 +255,16 @@ export default function AdminUserHistory() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 6,
+                    gap: SPACING.xs,
                     backgroundColor: COLORS.orange,
-                    paddingVertical: 8,
-                    paddingHorizontal: 12,
-                    borderRadius: 6,
-                    marginTop: 8
+                    paddingVertical: SPACING.sm,
+                    paddingHorizontal: SPACING.base,
+                    borderRadius: BORDER_RADIUS.sm,
+                    ...SHADOWS.sm
                   }}
                 >
-                  <FontAwesome name="edit" size={14} color={COLORS.white} />
-                  <Text style={{ color: COLORS.white, fontWeight: '600', fontSize: 12 }}>
+                  <FontAwesome name="edit" size={ICON_SIZES.sm} color={COLORS.white} />
+                  <Text style={{ color: COLORS.white, fontWeight: FONT_WEIGHTS.semibold, fontSize: FONT_SIZES.sm }}>
                     Editar como Admin
                   </Text>
                 </Pressable>

@@ -1,0 +1,40 @@
+Feature,Category,Complexity,Frontend Hours,Backend Hours,API Hours,Testing Hours,Total Hours,Notes
+Login System,Authentication,Medium,8,12,6,4,30,Login with multiple credentials (meter, cedula, name)
+User Authentication,Authentication,High,16,16,8,6,46,JWT tokens, role-based access
+Client Dashboard,Frontend,Medium,16,0,0,4,20,Welcome screen with reading details
+Client History,Frontend,High,20,0,0,6,26,Charts, graphs, year selector
+Client Data Management,Frontend,Medium,12,8,4,4,28,Personal data and bank account management
+Admin Dashboard,Frontend,High,24,0,0,8,32,Statistics, charts, management interface
+Admin Client Management,Backend,High,8,20,12,8,48,CRUD operations, search, filters
+Admin Reader Management,Backend,Medium,6,16,8,6,36,Reader CRUD, audit logs
+Admin Reports,Backend,High,12,24,16,10,62,Complex reports, data aggregation
+Reader Dashboard,Frontend,Medium,14,0,0,4,18,Reading input, meter status
+Reader Add Reading,Backend,High,10,20,12,8,50,Photo upload, QR scanner, calculations
+Reader History,Frontend,Medium,12,0,0,4,16,Reading history with filters
+Payment System,Backend,High,8,24,16,10,58,Payment processing, bank integration
+Database Design,Backend,High,0,32,0,12,44,Schema design, relationships, indexes
+API Development,API,High,0,0,40,16,56,RESTful APIs, documentation
+Security Implementation,Backend,High,4,20,8,8,40,Data encryption, input validation
+File Upload System,Backend,Medium,6,16,8,6,36,Image handling, storage
+QR Code Scanner,Frontend,Medium,8,4,4,4,20,Camera integration, barcode scanning
+Push Notifications,Backend,Medium,4,12,8,4,28,Payment reminders, reading alerts
+Data Export,Backend,Medium,4,12,6,4,26,Excel, PDF generation
+Audit Logging,Backend,Medium,0,16,4,4,24,User actions tracking
+Performance Optimization,Backend,Medium,0,16,8,6,30,Database optimization, caching
+Mobile Responsiveness,Frontend,Medium,16,0,0,4,20,Cross-platform compatibility
+Error Handling,Backend,Medium,4,12,6,4,26,Global error management
+Data Validation,Backend,Medium,0,16,8,6,30,Input validation, sanitization
+User Interface Design,Frontend,High,32,0,0,8,40,UI/UX design, component library
+State Management,Frontend,Medium,12,0,0,4,16,Context API, state persistence
+Navigation System,Frontend,Medium,8,0,0,2,10,Stack and tab navigation
+Form Validation,Frontend,Medium,8,0,0,4,12,Client-side validation
+Data Visualization,Frontend,High,20,0,0,6,26,Charts, graphs, analytics
+Search Functionality,Backend,Medium,4,12,6,4,26,Advanced search, filters
+Data Backup,Backend,Medium,0,12,4,4,20,Automated backups, recovery
+Monitoring System,Backend,Medium,0,16,8,6,30,Application monitoring, logging
+Documentation,Documentation,Low,8,8,4,2,22,API docs, user manuals
+Deployment,DevOps,Medium,0,16,8,6,30,CI/CD, server setup
+Testing Strategy,Testing,High,0,0,0,24,24,Unit, integration, e2e tests
+Code Review,Quality,Medium,0,0,0,16,16,Code quality, best practices
+Maintenance,Maintenance,Low,4,8,4,2,18,Bug fixes, updates
+Training,Training,Low,4,4,2,2,12,User training, documentation

@@ -9,25 +9,41 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AdminStackParamList } from './AdminStack';
-import { getHistory, updateReading } from '@services/mockApi';
+import { getHistory, updateReading } from '../../services/mockApi';
 
 export default function AdminEditReading() {
   const route = useRoute<RouteProp<AdminStackParamList, 'AdminEditReading'>>();
   const navigation = useNavigation<NativeStackNavigationProp<AdminStackParamList>>();
   const { readingId, meterNumber, customerName, customerCedula } = route.params;
   
-  const [reading, setReading] = useState<any>(null);
+  const [reading, setReading] = useState<{
+    id: string;
+    date: string;
+    value: number;
+    diff: number;
+    amount: number;
+    paid: boolean;
+    isEditable: boolean;
+  } | null>(null);
   const [newValue, setNewValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [reason, setReason] = useState('');
 
   useEffect(() => {
-    // Buscar la lectura específica
-    const history = getHistory(meterNumber);
-    const foundReading = history.find(r => r.id === readingId);
-    if (foundReading) {
-      setReading(foundReading);
-      setNewValue(foundReading.value.toString());
+    try {
+      // Buscar la lectura específica
+      const history = getHistory(meterNumber);
+      const foundReading = history.find(r => r.id === readingId);
+      if (foundReading) {
+        setReading(foundReading);
+        setNewValue(foundReading.value.toString());
+      } else {
+        console.error('Reading not found:', { readingId, meterNumber });
+        Alert.alert('Error', 'No se encontró la lectura especificada');
+      }
+    } catch (error) {
+      console.error('Error loading reading:', error);
+      Alert.alert('Error', 'No se pudo cargar la información de la lectura');
     }
   }, [readingId, meterNumber]);
 
@@ -42,9 +58,14 @@ export default function AdminEditReading() {
       return;
     }
 
-    const newValueNum = parseInt(newValue.trim());
+    const newValueNum = parseFloat(newValue.trim());
     if (isNaN(newValueNum) || newValueNum < 0) {
-      Alert.alert('Error', 'El valor debe ser un número positivo');
+      Alert.alert('Error', 'El valor debe ser un número positivo válido');
+      return;
+    }
+
+    if (newValueNum === reading.value) {
+      Alert.alert('Error', 'El nuevo valor debe ser diferente al valor actual');
       return;
     }
 
@@ -52,6 +73,10 @@ export default function AdminEditReading() {
     try {
       // Actualizar la lectura
       const updatedReading = updateReading(readingId, newValueNum);
+      
+      if (!updatedReading) {
+        throw new Error('No se pudo actualizar la lectura');
+      }
       
       console.log('Reading updated by admin:', updatedReading);
       console.log('Reason:', reason);
@@ -72,7 +97,7 @@ export default function AdminEditReading() {
       );
     } catch (error) {
       console.error('Error updating reading:', error);
-      Alert.alert('Error', 'No se pudo actualizar la lectura');
+      Alert.alert('Error', 'No se pudo actualizar la lectura. Verifica que la lectura existe y es editable.');
     } finally {
       setIsLoading(false);
     }
@@ -223,7 +248,7 @@ export default function AdminEditReading() {
           title="Guardar Cambios"
           onPress={handleSave}
           style={{ flex: 1 }}
-          disabled={isLoading || !newValue.trim() || !reason.trim()}
+          disabled={isLoading || !newValue.trim() || !reason.trim() || newValue.trim() === reading?.value.toString()}
         />
       </View>
     </ScrollView>

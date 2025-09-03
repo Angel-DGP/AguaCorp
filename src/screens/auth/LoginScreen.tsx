@@ -111,15 +111,33 @@ export default function LoginScreen() {
         </View>
 
         <View>
+          
+
           <AppInput
             label="Código del Medidor"
             value={meterCode}
             onChangeText={setMeterCode}
-            placeholder="M-1001"
+            placeholder="M-1001, 0102030405, Juan Pérez..."
             autoCapitalize="characters"
             autoCorrect={false}
           />
-          
+<View style={{ 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            gap: 8, 
+            marginBottom: 12,
+            paddingHorizontal: 12,
+            paddingVertical: 8,
+            backgroundColor: '#f0f9ff', 
+            borderRadius: 6,
+            borderLeftWidth: 3,
+            borderLeftColor: COLORS.lightBlue
+          }}>
+            <FontAwesome name="info-circle" size={12} color={COLORS.lightBlue} />
+            <Text style={{ fontSize: 11, color: COLORS.darkGray, flex: 1 }}>
+              Usa tu <Text style={{ fontWeight: '600', color: COLORS.darkBlue }}>medidor</Text>, <Text style={{ fontWeight: '600', color: COLORS.darkBlue }}>cédula</Text> o <Text style={{ fontWeight: '600', color: COLORS.darkBlue }}>nombre</Text>
+            </Text>
+          </View>
           {error && (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 }}>
               <FontAwesome name="exclamation-triangle" size={14} color={COLORS.orange} />
@@ -138,7 +156,10 @@ export default function LoginScreen() {
 
         <View style={{ alignItems: 'center', marginTop: 24 }}>
           <Text style={{ fontSize: 12, color: COLORS.gray, textAlign: 'center' }}>
-            Ingresa tu código de medidor para acceder al sistema
+           {'\n'}Acceso administrativo:{'\n'}
+            Código: ADMIN{'\n'}
+            {'\n'}Acceso de lector:{'\n'}
+            Código: L001, L002, L003
           </Text>
         </View>
       </ScrollView>

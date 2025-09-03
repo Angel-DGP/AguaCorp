@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import type { RouteProp } from '@react-navigation/native-stack';
+import type { RouteProp } from '@react-navigation/native';
 import type { AdminStackParamList } from './AdminStack';
-import { getReaderAuditLogs, getReaderById } from '@services/mockAdmin';
+import { getReaderAuditLogs, getReaderById } from '../../services/mockAdmin';
 import { FontAwesome } from '@expo/vector-icons';
 import { COLORS } from '../../constants/Colors';
 
@@ -76,7 +76,7 @@ export default function AdminReaderHistory() {
         marginBottom: 20,
         alignItems: 'center'
       }}>
-        <FontAwesome name="user-tie" size={48} color={COLORS.white} />
+        <FontAwesome name="user" size={48} color={COLORS.white} />
         <Text style={{ fontSize: 20, fontWeight: '700', color: COLORS.white, marginTop: 12 }}>
           {readerName}
         </Text>
@@ -135,7 +135,7 @@ export default function AdminReaderHistory() {
                 paddingHorizontal: 12,
                 paddingVertical: 6,
                 borderRadius: 16,
-                backgroundColor: actionFilter === action ? getActionColor(action) : COLORS.lightGray,
+                backgroundColor: actionFilter === action ? getActionColor(action) : '#f1f5f9',
                 borderWidth: 1,
                 borderColor: actionFilter === action ? getActionColor(action) : COLORS.gray,
               }}
@@ -252,7 +252,7 @@ export default function AdminReaderHistory() {
             {/* Valores antes y después */}
             {log.oldValue && (
               <View style={{ 
-                backgroundColor: COLORS.lightGray, 
+                backgroundColor: '#f1f5f9', 
                 padding: 8, 
                 borderRadius: 6, 
                 marginBottom: 8 
@@ -268,7 +268,7 @@ export default function AdminReaderHistory() {
             
             {log.newValue && (
               <View style={{ 
-                backgroundColor: COLORS.lightGray, 
+                backgroundColor: '#f1f5f9', 
                 padding: 8, 
                 borderRadius: 6 
               }}>

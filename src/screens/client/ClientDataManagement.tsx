@@ -35,6 +35,10 @@ export default function ClientDataManagement() {
     address: '',
     phone: '',
     email: '',
+    bankName: '',
+    accountNumber: '',
+    accountType: '',
+    accountHolder: '',
   });
 
   useEffect(() => {
@@ -45,6 +49,10 @@ export default function ClientDataManagement() {
         address: currentCustomer.address || '',
         phone: currentCustomer.phone || '',
         email: currentCustomer.email || '',
+        bankName: currentCustomer.bankName || '',
+        accountNumber: currentCustomer.accountNumber || '',
+        accountType: currentCustomer.accountType || '',
+        accountHolder: currentCustomer.accountHolder || '',
       });
     }
   }, [currentCustomer]);
@@ -104,6 +112,10 @@ export default function ClientDataManagement() {
         address: currentCustomer.address || '',
         phone: currentCustomer.phone || '',
         email: currentCustomer.email || '',
+        bankName: currentCustomer.bankName || '',
+        accountNumber: currentCustomer.accountNumber || '',
+        accountType: currentCustomer.accountType || '',
+        accountHolder: currentCustomer.accountHolder || '',
       });
     }
     setIsEditing(false);
@@ -246,6 +258,77 @@ export default function ClientDataManagement() {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontSize: FONT_SIZES.base, fontWeight: FONT_WEIGHTS.medium, color: COLORS.darkGray }}>Estado</Text>
             <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.green, fontWeight: FONT_WEIGHTS.medium }}>Activo</Text>
+          </View>
+        </View>
+      </AppCard>
+
+      {/* Información Bancaria */}
+      <AppCard>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SPACING.lg }}>
+          <FontAwesome name="credit-card" size={ICON_SIZES.lg} color={COLORS.darkBlue} style={{ marginRight: SPACING.base }} />
+          <Text style={{ fontSize: FONT_SIZES.lg, fontWeight: FONT_WEIGHTS.semibold, color: COLORS.darkBlue }}>Datos Bancarios</Text>
+        </View>
+
+        <View style={{ gap: SPACING.lg }}>
+          <View>
+            <Text style={{ fontSize: FONT_SIZES.base, fontWeight: FONT_WEIGHTS.medium, color: COLORS.darkGray, marginBottom: SPACING.sm }}>Banco</Text>
+            {isEditing ? (
+              <AppInput
+                value={formData.bankName}
+                onChangeText={(text) => setFormData({ ...formData, bankName: text })}
+                placeholder="Nombre del banco"
+              />
+            ) : (
+              <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkBlue, fontWeight: FONT_WEIGHTS.medium }}>
+                {currentCustomer.bankName || 'No especificado'}
+              </Text>
+            )}
+          </View>
+
+          <View>
+            <Text style={{ fontSize: FONT_SIZES.base, fontWeight: FONT_WEIGHTS.medium, color: COLORS.darkGray, marginBottom: SPACING.sm }}>Número de Cuenta</Text>
+            {isEditing ? (
+              <AppInput
+                value={formData.accountNumber}
+                onChangeText={(text) => setFormData({ ...formData, accountNumber: text })}
+                placeholder="Número de cuenta bancaria"
+                keyboardType="numeric"
+              />
+            ) : (
+              <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkBlue, fontWeight: FONT_WEIGHTS.medium }}>
+                {currentCustomer.accountNumber || 'No especificado'}
+              </Text>
+            )}
+          </View>
+
+          <View>
+            <Text style={{ fontSize: FONT_SIZES.base, fontWeight: FONT_WEIGHTS.medium, color: COLORS.darkGray, marginBottom: SPACING.sm }}>Tipo de Cuenta</Text>
+            {isEditing ? (
+              <AppInput
+                value={formData.accountType}
+                onChangeText={(text) => setFormData({ ...formData, accountType: text })}
+                placeholder="Ahorros, Corriente, etc."
+              />
+            ) : (
+              <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkBlue, fontWeight: FONT_WEIGHTS.medium }}>
+                {currentCustomer.accountType || 'No especificado'}
+              </Text>
+            )}
+          </View>
+
+          <View>
+            <Text style={{ fontSize: FONT_SIZES.base, fontWeight: FONT_WEIGHTS.medium, color: COLORS.darkGray, marginBottom: SPACING.sm }}>Titular de la Cuenta</Text>
+            {isEditing ? (
+              <AppInput
+                value={formData.accountHolder}
+                onChangeText={(text) => setFormData({ ...formData, accountHolder: text })}
+                placeholder="Nombre del titular de la cuenta"
+              />
+            ) : (
+              <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkBlue, fontWeight: FONT_WEIGHTS.medium }}>
+                {currentCustomer.accountHolder || 'No especificado'}
+              </Text>
+            )}
           </View>
         </View>
       </AppCard>

@@ -81,7 +81,7 @@ export default function ClientReadingDetails() {
 
         <View style={{ backgroundColor: '#f8fafc', padding: SPACING.lg, borderRadius: BORDER_RADIUS.base }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: SPACING.base }}>
-            <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkGray }}>Medidor</Text>
+            <Text style={{ fontSize: FONT_SIZES.base, color: COLORS.darkGray }}>Número de medidor</Text>
             <Text style={{ fontSize: FONT_SIZES.lg, fontWeight: FONT_WEIGHTS.semibold, color: COLORS.darkBlue }}>{currentCustomer.meterNumber}</Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: SPACING.base }}>

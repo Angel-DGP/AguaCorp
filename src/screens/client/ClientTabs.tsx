@@ -5,9 +5,11 @@ import { COLORS } from '../../constants/Colors';
 import { ICON_SIZES } from '../../constants/Styles';
 import ClientReadingsStack from './ClientReadingsStack';
 import ClientDataStack from './ClientDataStack';
+import ClientHistoryTab from './ClientHistoryTab';
 
 export type ClientTabsParamList = {
   ClientReadingsStack: undefined;
+  ClientHistoryTab: undefined;
   ClientDataStack: undefined;
 };
 
@@ -42,6 +44,16 @@ export default function ClientTabs() {
           title: 'Lecturas',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="tachometer" size={size || ICON_SIZES.base} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ClientHistoryTab"
+        component={ClientHistoryTab}
+        options={{
+          title: 'Historial',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="bar-chart" size={size || ICON_SIZES.base} color={color} />
           ),
         }}
       />

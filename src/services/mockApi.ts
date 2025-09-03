@@ -8,6 +8,10 @@ export type Customer = {
   address?: string;
   phone?: string;
   email?: string;
+  bankName?: string;
+  accountNumber?: string;
+  accountType?: string;
+  accountHolder?: string;
 };
 
 export type Reading = {
@@ -20,6 +24,9 @@ export type Reading = {
   paid: boolean;
   createdAt: number; // timestamp when created
   isEditable: boolean; // whether this reading can be edited
+  previousValue?: number; // previous reading value
+  previousDate?: string; // previous reading date
+  readerName?: string; // name of the reader who took the reading
 };
 
 export type ReaderUser = { id: string; name: string; assignedMeters: string[] };
@@ -57,10 +64,15 @@ const readings: Reading[] = (() => {
   
   while (currentMonth <= currentDate) {
     for (const meter of Object.keys(base)) {
-      const prev = arr.filter((r) => r.meterNumber === meter).at(-1)?.value ?? base[meter];
+      const prevReading = arr.filter((r) => r.meterNumber === meter).at(-1);
+      const prev = prevReading?.value ?? base[meter];
       const value = prev + Math.round(10 + Math.random() * 25);
       const diff = value - prev;
       const amount = diff * 0.8; // tarifa mock
+      
+      // Nombres de lectores mock
+      const readerNames = ['Carlos Mendoza', 'María González', 'Luis Rodríguez', 'Ana Torres', 'Pedro Silva'];
+      const randomReader = readerNames[Math.floor(Math.random() * readerNames.length)];
       
       arr.push({
         id: `${meter}-${currentMonth.getTime()}`,
@@ -72,6 +84,9 @@ const readings: Reading[] = (() => {
         paid: Math.random() > 0.3,
         createdAt: currentMonth.getTime(),
         isEditable: false, // Historical readings are not editable
+        previousValue: prevReading ? prevReading.value : undefined,
+        previousDate: prevReading ? prevReading.date : undefined,
+        readerName: randomReader,
       });
     }
     currentMonth = addMonths(currentMonth, 1);
@@ -81,7 +96,12 @@ const readings: Reading[] = (() => {
 })();
 
 export function findCustomerByIdOrMeter(query: string): Customer | undefined {
-  return customers.find((c) => c.cedula === query || c.meterNumber === query);
+  const searchQuery = query.toLowerCase().trim();
+  return customers.find((c) => 
+    c.cedula === query || 
+    c.meterNumber === query || 
+    c.name.toLowerCase().includes(searchQuery)
+  );
 }
 
 export function updateCustomer(customerId: string, updates: Partial<Pick<Customer, 'name' | 'cedula'>>): Customer {
